@@ -1,0 +1,123 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-0">
+        <div class="card-header">
+          <strong>{{ 'history.Title' | translate }}</strong>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <ng-container *ngIf="user.roleID === 1 || user.roleID === 2">
+                <label class="col-md-1 col-form-label" for="receive ID"><strong
+                    class="float-right">{{ 'history.CardNumber' | translate }}</strong></label>
+                <div class="col-md-2">
+                  <input type="text" [(ngModel)]="userID" name="receiveID" class="form-control"
+                    placeholder="{{ 'history.InputCardNumber' | translate }}">
+                </div>
+              </ng-container>
+              <label class="col-md-1 col-form-label" for="fromDate"><strong
+                  class="float-right">{{ 'history.Date' | translate }}</strong></label>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" placeholder="{{ 'history.InputStartDate' | translate }}" id="fromDate"
+                    class="form-control" bsDatepicker [(ngModel)]="time_start" name="time_start" [bsConfig]="bsConfig">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" placeholder="{{ 'history.InputEndDate' | translate }}" id="fromDate"
+                    class="form-control" bsDatepicker [(ngModel)]="time_end" name="time_end" [bsConfig]="bsConfig">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+                <label class="col-md-1 col-form-label" for="products"><strong
+                  class="float-right">{{ 'history.TitleProduct' | translate }}</strong></label>
+              <div class="col-md-2 mt-1">
+                <ng-select2 [data]="products" [value]="productID" [options]="optionsProduct" name="role"
+                  (valueChanged)="changeProduct($event)" ></ng-select2>
+                </div>
+                <div class="col-1" *ngIf="user.roleID === 1 || user.roleID === 2"></div>
+                <label class="col-md-1 col-form-label" for="status">
+                  <div [ngStyle] ="{'margin-top':(user.roleID === 1 || user.roleID === 2)?'20px':'0px'}">
+                    <strong >{{ 'history.Table-column10' | translate }}</strong>
+                  </div>
+                 </label>
+              <div class="col-md-1 mt-1" >
+                <div  [ngStyle] ="{'margin-top':(user.roleID === 1 || user.roleID === 2)?'20px':'0px'}">
+                  <ng-select2 [data]="statusList" [value]="status" [options]="optionsStatus" name="role"
+                  (valueChanged)="changeStatus($event)" ></ng-select2>
+                </div>
+                </div>
+              <div class="col-md-2" >
+                <button type="button" [ngStyle] ="{'margin-top':(user.roleID === 1 || user.roleID === 2)?'20px':'0px'}"
+                 class="btn btn-success btn-block" (click)="search()"><i class="fa fa-search"></i>
+                  {{ 'history.ButtonSearch' | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-body mt-1">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>{{ 'history.Table-column1' | translate }}</th>
+                  <th>{{ 'history.Table-column2' | translate }}</th>
+                  <th>{{ 'history.Table-column3' | translate }}</th>
+                  <th>{{ 'history.Table-column7' | translate }}</th>
+                  <th>{{ 'history.Table-column8' | translate }}</th>
+                  <th>{{ 'history.Table-column9' | translate }}</th>
+                  <th>{{ 'history.Table-column10' | translate }}</th>
+                  <th>{{ 'history.Table-column11' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let history of historys; let i = index">
+                  <td>{{(pagination.currentPage -1) * pagination.itemsPerPage + i + 1}}</td>
+                  <td>{{history.depNameShow}}</td>
+                  <td>{{history.id}}</td>
+                  <td>{{history.accept_ID}}</td>
+                  <!-- <td *ngIf="user.roleID === 3">{{history.userName}}</td>
+                  <td *ngIf="user.roleID === 2">{{history.acceptName}}</td>
+                  <td *ngIf="user.roleID === 1 || user.roleID === 0">{{history.userName}}</td> -->
+                  <td>{{history.register_Date | date: "MM/dd/yyyy, h:mm:ss a"}}</td>
+                  <td>{{history.accept_Date | date: "MM/dd/yyyy, h:mm:ss a"}}</td>
+
+                  <!-- Của người được duyệt cấp 3 -->
+                  <td *ngIf="user.roleID === 0 && history.status === '0'">{{ 'history.Status0' | translate }}</td>
+                  <td *ngIf="user.roleID === 0 && history.status === '1'">{{ 'history.Status1' | translate }}</td>
+                  <td *ngIf="user.roleID === 0 && history.status === '2'">{{ 'history.Status2' | translate }}</td>
+
+                  <!-- Của người được duyệt cấp 3 -->
+                  <td *ngIf="user.roleID === 1 && history.status === '0'">{{ 'history.Status0' | translate }}</td>
+                  <td *ngIf="user.roleID === 1 && history.status === '1'">{{ 'history.Status1' | translate }}</td>
+                  <td *ngIf="user.roleID === 1 && history.status === '2'">{{ 'history.Status2' | translate }}</td>
+                  <!-- Của người được duyệt cấp 2 -->
+                  <td *ngIf="user.roleID === 2 && history.status === '0'">{{ 'history.Status0' | translate }}</td>
+                  <td *ngIf="user.roleID === 2 && history.status === '1'">{{ 'history.Status1' | translate }}</td>
+                  <!-- Của người xin lãnh -->
+                  <td *ngIf="user.roleID === 3 && history.status === '0'">{{ 'history.Status0' | translate }}</td>
+                  <td *ngIf="user.roleID === 3 && history.status === '1'">{{ 'history.Status1' | translate }}</td>
+                  <td *ngIf="user.roleID === 3 && history.status === '2'">{{ 'history.Status2' | translate }}</td>
+                  <td class="button-center">
+                    <button (click)="detail(history.id)" class="btn btn-primary"><i class="icon-arrow-right-circle"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+            [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+            nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+          </pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

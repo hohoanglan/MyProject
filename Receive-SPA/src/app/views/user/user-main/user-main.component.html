@@ -1,0 +1,69 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i> {{ 'userMain.Title' | translate }}
+            <button type="button" (click) = "add()" class="btn btn-sm btn-primary float-right"><i
+              class="fa fa-plus"></i> {{ 'userMain.ButtonAdd' | translate }}</button>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="userID"><strong
+                  class="float-right">{{ 'approval.CardNumber' | translate }}</strong></label>
+              <div class="col-md-2">
+                <input type="text" [(ngModel)]="userID" placeholder="{{ 'approval.InputCardNumber' | translate }}"
+                  name="userReceive" class="form-control">
+              </div>
+              <div class="col-md-2">
+                  <button type="button" (click)="search()" class="btn btn-success"><i class="fa fa-search"></i>
+                    {{ 'approval.ButtonSearch' | translate }}
+                  </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-body mt-1">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>{{ 'userMain.Table-column2' | translate }}</th>
+                  <th>{{ 'userMain.Table-column3' | translate }}</th>
+                  <th>{{ 'userMain.Table-column4' | translate }}</th>
+                  <th>{{ 'userMain.Table-column5' | translate }}</th>
+                  <th>{{ 'userMain.Table-column6' | translate }}</th>
+                  <th>{{ 'userMain.Table-column7' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users; let i = index">
+                  <td class="font-table align-middle arow" style='white-space: nowrap'>
+                    <button type="button" (click)="edit(user)" class="btn btn-primary btn-sm">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" (click) = "deleteUser(user.id)" class="btn btn-danger btn-sm ml-1">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                  <td>{{user.id}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.roleName}}</td>
+                  <td>{{user.depID}}</td>
+                  <td>{{user.update_By}}</td>
+                  <td>{{user.update_Time | date: "MM/dd/yyyy"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+          [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+          nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+        </pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

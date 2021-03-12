@@ -1,0 +1,97 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-0">
+        <div class="card-header">
+          <strong>{{ 'manager.Title' | translate }}</strong>
+        </div>
+        <form class="form-horizontal">
+          <div class="row card-body">
+            <div class="col-md-3 row">
+              <label class="col-md-4 col-form-label" for="receive ID"><strong
+                  class="float-right">{{ 'manager.QrCode' | translate }}:</strong></label>
+              <div class="col-md-8 ">
+                <input type="text" [(ngModel)]="receiveID" name="receiveID" class="form-control"
+                  placeholder="{{ 'manager.InputQrCode' | translate }}">
+              </div>
+            </div>
+            <div class="col-md-3 row">
+              <label class="col-md-3 col-form-label" for="user ID"><strong
+                  class="float-right">{{ 'manager.CardNumber' | translate }}:</strong></label>
+              <div class="col-md-9">
+                <input type="text" [(ngModel)]="userID" name="userID" class="form-control"
+                  placeholder="{{ 'manager.InputCardNumber' | translate }}">
+              </div>
+            </div>
+            <div class="col-md-4 row">
+              <label class="col-md-3 col-form-label" for="user ID"><strong
+                  class="float-right">{{ 'manager.Table-column9' | translate }}:</strong></label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <input type="text" placeholder="{{ 'manager.Table-column13' | translate }}" id="date"
+                    class="form-control" bsDatepicker [(ngModel)]="time" name="time" [bsConfig]="bsConfig">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button (click)="search()" class="btn btn-success mr-2"><i
+                  class="fa fa-search"></i>{{ 'manager.ButtonSearch' | translate }}</button>
+            </div>
+            <div class="col-md-1">
+              <button (click)="clear()" class="btn btn-danger mr-2"><i class="fa fa-ban"></i> Clear</button>
+            </div>
+
+          </div>
+        </form>
+        <div class="card-body mt-1">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>{{ 'manager.Table-column2' | translate }}</th>
+                  <th>{{ 'manager.Table-column3' | translate }}</th>
+                  <th>{{ 'manager.Table-column4' | translate }}</th>
+                  <th>{{ 'manager.Table-column5' | translate }}</th>
+                  <th>{{ 'manager.Table-column9' | translate }}</th>
+                  <th>{{ 'manager.Table-column10' | translate }}</th>
+                  <th>{{ 'manager.Table-column11' | translate }}</th>
+                  <th>{{ 'manager.Table-column12' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let receive of isReceive$ ;let i = index">
+                  <td>
+                    <button class="btn btn-primary"
+                      (click)="editReceive(receive.id)">{{ 'manager.Edit' | translate }}</button>
+                  </td>
+                  <td>{{receive.depID}}</td>
+                  <td>{{receive.userID}}</td>
+                  <td>{{receive.id}}</td>
+                  <td>{{receive.accept_ID}}</td>
+                  <td>{{receive.register_Date | date: "MM/dd/yyyy, h:mm:ss a"}}</td>
+                  <td>{{receive.accept_Date | date: "MM/dd/yyyy, h:mm:ss a"}}</td>
+                  <td class="font-table">
+                    <button (click)="acceptReceive(receive.id)" class="btn btn-success ml-1">Yes</button>
+                    <button (click)="delineReceive(receive.id)" class="btn btn-danger">No</button>
+                  </td>
+                  <td class="button-center">
+                    <button (click)="detail(receive.id)" class="btn btn-primary"><i
+                        class="icon-arrow-right-circle"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+            [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+            nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+          </pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

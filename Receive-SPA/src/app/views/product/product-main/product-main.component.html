@@ -1,0 +1,65 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> {{ 'productMain.Title' | translate}}
+          <button type="button" (click)="add()" class="btn btn-sm btn-primary float-right"><i class="fa fa-plus"></i>
+            {{ 'productMain.ButtonAdd' | translate}}</button>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label"  for="productID"><strong class="float-right">{{'productMain.ProductID' | translate }}</strong></label>
+            <div class="col-md-2">
+              <input type="text" (keyup)="search()" [(ngModel)]="productID" placeholder="{{'productMain.InputProductID' | translate }}"  name="productID" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isLoading$ | async; else tableProduct" class="text-center">
+          <img src="assets/img/loading.svg" alt="" width="80" class="text-center">
+        </div>
+        <ng-template #tableProduct>
+        <div class="card-body mt-1">
+          <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>{{ 'productMain.Table-column2' | translate}}</th>
+                    <th>{{ 'productMain.Table-column3' | translate}}</th>
+                    <th>{{ 'productMain.Table-column4' | translate}}</th>
+                    <th>{{ 'productMain.Table-column5' | translate}}</th>
+                    <th>{{ 'productMain.Table-column6' | translate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of listProducts$ | async;let i = index">
+                    <td class="font-table align-middle arow" style='white-space: nowrap'>
+                      <button type="button" [routerLink]="['/product/manager/change', product.id]" class="btn btn-primary btn-sm">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" (click)="delete(product.id)" class="btn btn-danger btn-sm ml-1">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                    <td>{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.category.name_LL}}</td>
+                    <td>{{product.updated_By}}</td>
+                    <td>{{product.update_Time | date: "MM/dd/yyyy"}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+          <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+            [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+            nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+          </pagination>
+        </div>
+      </ng-template>
+      </div>
+    </div>
+
+  </div>
+</div>
+

@@ -1,0 +1,47 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>{{ 'EditReceive.Title' | translate }}</strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <div class="card-body">
+         <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>{{ 'EditReceive.ProductName' | translate }}</th>
+                <th>{{ 'EditReceive.ProductID' | translate }}</th>
+                <th>{{ 'EditReceive.Qty' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of receiveDetails">
+                <td><ng-select2 [data]="products" [value]="item.productID" [options]="optionsProduct" name="role"
+                  (valueChanged)="changeProduct($event,item)" ></ng-select2></td>
+                <td>{{item.productName}}</td>
+                <td>
+                  <input type="number" min="1" name="qty" [(ngModel)]="item.qty"> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+         </div>
+        </div>
+        <div class="card-footer">
+          <button type="button" (click)="cancel()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>
+            {{ 'EditReceive.Cancel' | translate }}</button>
+          <button (click)="save()" class="btn btn-sm btn-success ml-2"><i class="fa fa-check"></i>
+            {{ 'EditReceive.Save' | translate }}</button>
+          <ng-template #elseSave>
+            <button disabled class="btn btn-sm btn-success ml-2"><i class="fa fa-check"></i>
+              {{ 'EditReceive.Save' | translate }}</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

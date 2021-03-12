@@ -1,0 +1,41 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <strong>{{ 'productChange.TitleEdit' | translate}}</strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addProductForm="ngForm" (ngSubmit)="addProductForm.valid" [formGroup]="editForm">
+          <div class="card-body" *ngIf="product$ |async as product">
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="defect-no" >{{ 'productChange.ProductID' | translate}}: </label>
+              <div class="col-md-3">
+                <input type="text" name="productID" required class="form-control" formControlName="id"
+                  placeholder="{{ 'productChange.InputProductID' | translate}}">
+
+              </div>
+              <label class="col-md-1 col-form-label" for="productName" >{{ 'productChange.NameProduct' | translate}}: </label>
+              <div class="col-md-4">
+                <input type="text" required name="productName" class="form-control" formControlName="name"
+                  placeholder="{{ 'productChange.InputNameProduct' | translate}}">
+              </div>
+              <label class="col-md-1 col-form-label" for="defect-no" >{{ 'productChange.Category' | translate}}: </label>
+              <div class="col-md-2">
+                <ng-select2  [data]="categories" [options]="optionsCategory" formControlName="catID"
+                 name="role" [cssImport]=true></ng-select2>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-footer">
+          <button type="button" (click)="cancel()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> {{ 'productChange.ButtonCancel' | translate}}</button>
+          <button type="button" (click)="save()" class="btn btn-sm btn-success ml-2"
+          [disabled]="!addProductForm.valid"><i class="fa fa-check"></i> {{ 'productChange.ButtonSave' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
